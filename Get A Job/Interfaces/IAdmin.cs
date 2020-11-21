@@ -8,7 +8,7 @@ namespace Get_A_Job.Interfaces
 {
 	public interface IAdmin
 	{
-		string Addadmin(AddAdminViewModel AdminDetails);
+		string Addadmin(AdminViewModel AdminDetails);
 
 	}
 }

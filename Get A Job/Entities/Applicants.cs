@@ -15,6 +15,7 @@ namespace Get_A_Job.Entities
         public string LastName { get; set; } 
         public string OtherNames { get; set; }
         public string Address { get; set; }
+        public string Phonenumber { get; set; }
         public string State { get; set; }
         public DateTime DateCreated { get; set; }
         public string UserId { get; set; }

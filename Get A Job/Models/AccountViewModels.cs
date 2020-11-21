@@ -79,6 +79,12 @@ namespace Get_A_Job.Models
         [Required]
         [Display(Name = "Other Names")]
         public string OtherNames { get; set; }
+        
+        [Required]
+        [Display(Name = "Phone Number")]
+        [StringLength(11, ErrorMessage = "The {0} must {2} characters long.", MinimumLength = 11)]
+
+        public string Phonenumber { get; set; }
 
 
         [Required]

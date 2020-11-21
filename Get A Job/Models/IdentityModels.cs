@@ -33,6 +33,7 @@ namespace Get_A_Job.Models
             return new ApplicationDbContext();
         }
         public DbSet<Applicants> applicants { get; set; }
+        public DbSet<JobOffers>  jobOffers{ get; set; }
         
     }
 }

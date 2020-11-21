@@ -1,15 +1,34 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
     {
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li  class="nav-link btn btn-info mr-sm-2">
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @if (User.IsInRole("Admin"))
+        {
+            <li>
+                @Html.ActionLink("| DashBoard |", "Index", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
+
+            </li>
+        }
+        else
+        {
+            <li>
+                @Html.ActionLink("| DashBoard |", "Index", "Applicant", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
+
+            </li>
+            <li>
+                @Html.ActionLink("Job Offers", "AllJobs", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
+            </li>
+        }
+        <li>
+            @Html.ActionLink(" 'Hello  " + User.Identity.GetUserName() + "' ", "Index", "Manage", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white" })
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+
+        <li><a class="nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
 }

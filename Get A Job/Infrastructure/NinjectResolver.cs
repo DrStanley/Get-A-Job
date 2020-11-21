@@ -25,6 +25,7 @@ namespace Get_A_Job.Infrastructure
 		{
 			_kernel.Bind<ApplicationDbContext>().ToSelf();
 			_kernel.Bind<IAdmin>().To<AdminServices>();
+			_kernel.Bind<IJobApplication>().To<JobApplicationServices>();
 			_kernel.Bind<IApplicant>().To<ApplicantServices>();
 		}
 

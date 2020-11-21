@@ -20,6 +20,7 @@ namespace Get_A_Job.Entities
 		public byte[] CV { get; set; }
 		public string NameCV { get; set; }
 		public string NameLetter { get; set; }
+		public string Phonenumber { get; set; }
 		public byte[] Letter { get; set; }
 		public DateTime DateCreated { get; set; }
 		public string UserId { get; set; }

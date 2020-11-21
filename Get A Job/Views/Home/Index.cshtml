@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@using Get_A_Job.Models
+
+@model List<GetJobOffersView>
 
 
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -35,40 +38,45 @@
     <div class="d-flex justify-content-center row-cols-md-10 " style="padding-top:10px;">
         <h1>Ongoing Recruitment</h1>
     </div>
-    <div class="row " style="padding:50px">
-        <div class="col-md-4">
-            <h2>Position</h2>
-            <p>
-                NNPC Recruitment 2020 application form is out! The Nigeria National Petroleum Corporation (NNPC) has successfully
-                commenced recruitment intake for 2020 session applicants. The required educational qualifications and employment details.
+    <div class="row" style="padding:50px">
+        @{
+            if (Model.Count > 0)
+            {
+                int count = 0;
+                foreach (var job in Model)
+                {
 
 
-            </p>
-            <p>
-                @Html.ActionLink("Apply", "JobsDetail", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
-            </p>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Position</h2>
-            <p>
-                MTN Nigeria Recruitment 2020 has begun for graduate and undergraduate. MTN Nigeria Limited is currently recruiting
-                candidates who want to work with them. Here is how you can apply for the ongoing MTN Nigeria vacancies 2020.Fill and submit the form below
-            </p>
-            <p>
-                @Html.ActionLink("Apply", "JobsDetail", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Position</h2>
-            <p>
-                Apply for Oxford Partners Heritage Zest Recruitment 2020 for Investment Executive (N150k Monthly).
-                This Oxford Partners Heritage Zest Job Recruitment is available till deadline.
-            </p>
-            <p>
-                @Html.ActionLink("Apply", "JobsDetail", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
-            </p>
-        </div>
+                    count++;
+                    if (count < 4)
+                    {
+                        <div class="col-md-4">
+                            @using (Html.BeginForm("JobsDetail", "JobApplication"))
+                            {
+
+                            <input id="jobId" type="hidden" value="@job.Id" name="jobId" />
+
+                            <h2>@job.Title</h2>
+                            <p>
+                                @job.AplicationDetails
+                            </p>
+                            <p>
+                                <input type="submit" value="Apply" class="nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-5" />
+                            </p>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+                }
+            }
+
+        }
+
     </div>
     <div class="d-flex justify-content-center row-cols-md-4 " style="padding:10px;">
         @Html.ActionLink("View All Offers", "AllJobs", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })

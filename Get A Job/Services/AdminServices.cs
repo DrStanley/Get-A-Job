@@ -18,7 +18,7 @@ namespace Get_A_Job.Services
 			dbContext = db;
 		}
 
-		public string Addadmin(AddAdminViewModel AdminDetails)
+		public string Addadmin(AdminViewModel AdminDetails)
 		{
 			var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbContext));
 			var rolemanager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));

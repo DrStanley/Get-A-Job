@@ -1,26 +1,41 @@
 ﻿@{
     ViewBag.Title = "Job Details";
 }
+@using Get_A_Job.Models
 
+@model GetJobOffersView
 <div class="container" style="margin-top:10px;">
     <div class="text-center"> <h2>Job Application Details</h2></div>
     <div class="row">
-        <h4>Job Application Title</h4>
+        <h4>@Model.Title</h4>
     </div>
     <div class="row">
-        <p>Job application details</p>
+        <img src="@Model.Image" style="width:350px; height:350px;" />
+    </div>
+    <div class="row">
+        <h5>Aplication Details:</h5>
+
+        <p>@Model.AplicationDetails</p>
     </div>
     <div class="row">
         <h5>Requirements:</h5>
+        <p>@Model.AplicationRequirement</p>
     </div>
     <div class="text-danger">
         <b>
-            Application Closing Date
-            11th December, 2020.
+           Deadline: @Model.Deadline
         </b>
     </div>
 
     <div class="d-flex justify-content-center row-cols-md-4 " style="padding:10px;">
-        @Html.ActionLink("Apply", "JobsDetail", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
+        @if (Model.Deadline < DateTime.Now)
+        {
+
+        }
+        else
+        {
+            @Html.ActionLink("Apply", "ApplicationForm", "JobApplication", routeValues: null,
+           htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
+        }
     </div>
-</div>AllJobs
+</div>

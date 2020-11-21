@@ -24,6 +24,11 @@ namespace Get_A_Job.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Phone Number")]
+        public string Phonenumber { get; set; }
 
       
         [Display(Name = "Address")]
@@ -35,9 +40,9 @@ namespace Get_A_Job.Models
 
       
         [Display(Name = "Curriculum vitae (CV)")]
-        public byte[] CV { get; set; }
+        public HttpPostedFileBase CV { get; set; }
 
         [Display(Name = "Cover Letter")]
-        public byte[] Letter { get; set; }
+        public HttpPostedFileBase Letter { get; set; }
 	}
 }

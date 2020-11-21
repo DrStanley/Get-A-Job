@@ -200,6 +200,7 @@
     <Compile Include="Infrastructure\NinjectResolver.cs" />
     <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\IApplicant.cs" />
+    <Compile Include="Interfaces\IJobApplication.cs" />
     <Compile Include="Migrations\202011161121299_InitialCreate.cs" />
     <Compile Include="Migrations\202011161121299_InitialCreate.Designer.cs">
       <DependentUpon>202011161121299_InitialCreate.cs</DependentUpon>
@@ -208,15 +209,33 @@
     <Compile Include="Migrations\202011161948512_Applicant.Designer.cs">
       <DependentUpon>202011161948512_Applicant.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011181102159_Applicant1.cs" />
+    <Compile Include="Migrations\202011181102159_Applicant1.Designer.cs">
+      <DependentUpon>202011181102159_Applicant1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011190814512_JobOffer.cs" />
+    <Compile Include="Migrations\202011190814512_JobOffer.Designer.cs">
+      <DependentUpon>202011190814512_JobOffer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011210443131_JobOffer1.cs" />
+    <Compile Include="Migrations\202011210443131_JobOffer1.Designer.cs">
+      <DependentUpon>202011210443131_JobOffer1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011210523102_JobOffer2.cs" />
+    <Compile Include="Migrations\202011210523102_JobOffer2.Designer.cs">
+      <DependentUpon>202011210523102_JobOffer2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AddAdminViewModel.cs" />
+    <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ApplicationFormViewModel.cs" />
+    <Compile Include="Models\GetJobOffersView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AdminServices.cs" />
     <Compile Include="Services\ApplicantServices.cs" />
+    <Compile Include="Services\JobApplicationServices.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -399,11 +418,12 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\JobApplication\Index.cshtml" />
     <Content Include="Views\JobApplication\AllJobs.cshtml" />
     <Content Include="Views\JobApplication\JobsDetail.cshtml" />
     <Content Include="Views\Applicant\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\JobApplication\ApplicationForm.cshtml" />
+    <Content Include="Views\Admin\PostJob.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -425,6 +445,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011161948512_Applicant.resx">
       <DependentUpon>202011161948512_Applicant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011181102159_Applicant1.resx">
+      <DependentUpon>202011181102159_Applicant1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011190814512_JobOffer.resx">
+      <DependentUpon>202011190814512_JobOffer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011210443131_JobOffer1.resx">
+      <DependentUpon>202011210443131_JobOffer1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011210523102_JobOffer2.resx">
+      <DependentUpon>202011210523102_JobOffer2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

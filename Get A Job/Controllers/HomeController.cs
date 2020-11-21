@@ -11,12 +11,14 @@ namespace Get_A_Job.Controllers
 {
 	public class HomeController : Controller
 	{
-		IAdmin admin;
+		IAdmin iadmin;
+		IJobApplication ijobApplication;
 		private string userId;
 
-		public HomeController(IAdmin iadmin)
+		public HomeController(IAdmin admin,IJobApplication jobApplication)
 		{
-			admin = iadmin;
+			iadmin = admin;
+			ijobApplication = jobApplication;
 		}
 
 		public string UserId
@@ -33,13 +35,15 @@ namespace Get_A_Job.Controllers
 
 		public ActionResult Index()
 		{
-			AddAdminViewModel model = new AddAdminViewModel();
+			AdminViewModel model = new AdminViewModel();
 			model.Email = "oga@gmail.com";
 			model.Password = "Stan115.";
 			model.PhoneNumber = "08182878405";
-			admin.Addadmin(model);
+			iadmin.Addadmin(model);
+			
+			var jobs = ijobApplication.GetAllJobOffers("short");
 
-			return View();
+			return View(jobs);
 		}
 
 		public ActionResult About()
