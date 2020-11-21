@@ -34,7 +34,7 @@
         }
         else
         {
-            @Html.ActionLink("Apply", "ApplicationForm", "JobApplication", routeValues: null,
+            @Html.ActionLink("Apply", "ApplicationForm", "JobApplication", routeValues: new { jobId = @Model.Id},
            htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
         }
     </div>

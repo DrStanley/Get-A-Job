@@ -51,14 +51,15 @@ namespace Get_A_Job.Controllers
 			return View(jobs);
 		}
 
-		[Authorize(Roles = null)]
-		public ActionResult ApplicationForm()
+		[Authorize]
+		public ActionResult ApplicationForm(int jobId)
 		{
+			var jobs = ijobApplication.GetAJobOffer(jobId);
 			return View();
 		}
 
 		[HttpPost]
-		[Authorize(Roles = null)]
+		[Authorize]
 		public ActionResult ApplicationForm(ApplicationFormViewModel applicationForm,
 			HttpPostedFileBase file1, HttpPostedFileBase file2)
 		{

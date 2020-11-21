@@ -19,9 +19,7 @@
                 @Html.ActionLink("| DashBoard |", "Index", "Applicant", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
 
             </li>
-            <li>
-                @Html.ActionLink("Job Offers", "AllJobs", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
-            </li>
+         
         }
         <li>
             @Html.ActionLink(" 'Hello  " + User.Identity.GetUserName() + "' ", "Index", "Manage", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white" })

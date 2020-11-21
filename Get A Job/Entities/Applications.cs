@@ -25,7 +25,7 @@ namespace Get_A_Job.Entities
 		public DateTime DateCreated { get; set; }
 		public string UserId { get; set; }
 		public ApplicationUser User { get; set; }
-		public string JobID { get; set; }
+		public int JobID { get; set; }
 		public JobOffers jobOffers { get; set; }
 	}
 }
