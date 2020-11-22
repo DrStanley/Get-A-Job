@@ -13,5 +13,7 @@ namespace Get_A_Job.Interfaces
 		string CreateJobOffer(PostJobViewModel jobViewModel, string userId);
 		List<GetJobOffersView> GetAllJobOffers(string type);
 		GetJobOffersView GetAJobOffer(int id);
+		string SubmitApplication(ApplicationFormViewModel applicationForm, string NameLetter
+		   , string userid, string NameCV);
 	}
 }

@@ -12,18 +12,23 @@ namespace Get_A_Job.Services
 	public class JobApplicationServices : IJobApplication
 	{
 		public ApplicationDbContext dbContext;
-		public JobApplicationServices(ApplicationDbContext db)
+
+		ISendMail isendMail;
+		IAdmin iadmin;
+		public JobApplicationServices(ApplicationDbContext db, ISendMail sendMail, IAdmin admin)
 		{
 			dbContext = db;
+			isendMail = sendMail;
+			iadmin = admin;
 		}
+
+		//this method enables admin to post jobs which is stored in the database
 		public string CreateJobOffer(PostJobViewModel jobViewModel, string userId)
 		{
 			string result = "";
 			try
 			{
-				//var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbContext));
-				//var rolemanager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));
-
+			
 				JobOffers newJobOffers = new JobOffers()
 				{
 					Title = jobViewModel.JobTitle,
@@ -33,25 +38,13 @@ namespace Get_A_Job.Services
 					Position = jobViewModel.Position,
 					NoOfApplicant = jobViewModel.NumApplicant,
 					AplicationRequirement = jobViewModel.Requirements,
-					Image = JobApplicationServices.ImageConvertToByte(jobViewModel.AppImage),
+					Image = JobApplicationServices.ConvertToByte(jobViewModel.AppImage),
 					UserId = userId
 
 				};
 				dbContext.jobOffers.Add(newJobOffers);
 				dbContext.SaveChanges();
-				/*IdentityResult res = manager.Create(user, registerApplicant.Password);
-				if (res.Succeeded)
-				{
-					if (!rolemanager.RoleExists("Applicant"))
-					{
-						IdentityRole role = new IdentityRole();
-						role.Name = "Applicant";
-						rolemanager.Create(role);
-
-						manager.AddToRole(user.Id, "Applicant");
-					}
-					manager.AddToRole(user.Id, "Applicant");	
-				}*/
+		
 				result = "Success";
 			}
 			catch (Exception e)
@@ -61,9 +54,6 @@ namespace Get_A_Job.Services
 			return result;
 
 		}
-
-
-
 
 		public List<GetJobOffersView> GetAllJobOffers(string type)
 		{
@@ -115,7 +105,7 @@ namespace Get_A_Job.Services
 			return allOffers;
 		}
 
-
+		//this method gets the specific job user clicks to display the whole details
 		public GetJobOffersView GetAJobOffer(int id)
 		{
 			var jobs = dbContext.jobOffers.Where(j => j.Id == id).FirstOrDefault();
@@ -135,55 +125,112 @@ namespace Get_A_Job.Services
 				Image = JobApplicationServices.ImageConvertToString(jobs.Image),
 				DateCreated = jobs.DateCreated
 			};
-		
-			
+
+
 
 			return getJob;
 		}
 
-	public static string ImageConvertToString(byte[] bytes)
-	{
-		string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-
-		return "data:image/png;base64," + base64String;
-	}
-
-
-	public static string Get20(string text)
-	{
-		string new100 = "";
-
-		string[] splits = text.Split(' ');
-		for (int w = 0; w < 20; w++)
+		//this method helps in converting  byte to string Readable Image to be displayed
+		public static string ImageConvertToString(byte[] bytes)
 		{
-			if (w == 19)
-			{
-				new100 += splits[w] + "...";
-				break;
-			}
-			new100 += splits[w] + " ";
+			string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+
+			return "data:image/png;base64," + base64String;
 		}
 
-		return new100;
+
+		//this method submits applicants form to the database and notifies the Admin that posted the job.
+		public string SubmitApplication(ApplicationFormViewModel applicationForm, string NameLetter
+			, string userid, string NameCV)
+		{
+			string result = "";
+			try
+			{
+				Applications newApplications = new Applications()
+				{
+					FirstName = applicationForm.FirstName,
+					OtherNames = applicationForm.OtherNames,
+					LastName = applicationForm.LastName,
+					Address = applicationForm.Address,
+					Phonenumber = applicationForm.Phonenumber,
+					State = applicationForm.State,
+					JobID = applicationForm.JobID,
+					UserId = userid,
+					Email = applicationForm.Email,
+					NameCV = NameCV,
+					NameLetter = NameLetter,
+					CV = JobApplicationServices.ConvertToByte(applicationForm.CV),
+					Letter = JobApplicationServices.ConvertToByte(applicationForm.Letter),
+					DateCreated = DateTime.Now,
+
+				};
+
+				string HTMLcontent = "This is to inform you that <b>" + applicationForm.FirstName
+					+ " " + applicationForm.LastName + "</b> Has applied for the job offer you posted on JB Limited";
+
+				var res = isendMail.SendMail(
+					"ozoezistanley@gmail.com",
+					iadmin.GetAdminEmail(applicationForm.JobID),
+					"NEW APPLICANT",
+					HTMLcontent
+					);
+				if (res.IsCompleted)
+				{
+					dbContext.applications.Add(newApplications);
+					dbContext.SaveChanges();
+					result = "Success";
+
+				}
+				else
+				{
+					result = "An internal Error Occured. Please check you Network";
+				}
+
+
+
+			}
+			catch (Exception e)
+			{
+				result = "Error: " + e.Message;
+
+			}
+			return result;
+
+		}
+
+		//this method gets the first 20 words in application details to preview to the user when seeing all the applications
+		public static string Get20(string text)
+		{
+			string new100 = "";
+
+			string[] splits = text.Split(' ');
+			for (int w = 0; w < 20; w++)
+			{
+				if (w == 19)
+				{
+					new100 += splits[w] + "...";
+					break;
+				}
+				new100 += splits[w] + " ";
+			}
+
+			return new100;
+		}
+
+		//this method helps in converting HttpPostedFileBase to byte to enable it to be stored in Database
+		public static byte[] ConvertToByte(HttpPostedFileBase file)
+		{
+			Byte[] bytes = null;
+
+			Stream fs = file.InputStream;
+
+			BinaryReader br = new BinaryReader(fs);
+
+			bytes = br.ReadBytes((Int32)fs.Length);
+
+			return bytes;
+		}
+
 	}
-
-
-
-	public static byte[] ImageConvertToByte(HttpPostedFileBase file)
-	{
-		Byte[] bytes = null;
-
-		Stream fs = file.InputStream;
-
-		BinaryReader br = new BinaryReader(fs);
-
-		bytes = br.ReadBytes((Int32)fs.Length);
-
-		return bytes;
-	}
-
-
-
-
-}
 }

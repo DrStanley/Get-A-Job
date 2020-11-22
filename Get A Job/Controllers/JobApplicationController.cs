@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,11 +15,13 @@ namespace Get_A_Job.Controllers
 
 
 		IJobApplication ijobApplication;
+		IApplicant iapplicant;
 		private string userId;
 
-		public JobApplicationController(IJobApplication jobApplication)
+		public JobApplicationController(IJobApplication jobApplication, IApplicant applicant)
 		{
 			ijobApplication = jobApplication;
+			iapplicant = applicant;
 		}
 
 		public string UserId
@@ -32,9 +35,6 @@ namespace Get_A_Job.Controllers
 				userId = value;
 			}
 		}
-
-	
-		// GET: Application
 
 		public ActionResult AllJobs()
 		{
@@ -54,8 +54,10 @@ namespace Get_A_Job.Controllers
 		[Authorize]
 		public ActionResult ApplicationForm(int jobId)
 		{
-			var jobs = ijobApplication.GetAJobOffer(jobId);
-			return View();
+			var userDetails = iapplicant.GetApplicantsDetails(UserId);
+			userDetails.JobID = jobId;
+
+			return View(userDetails);
 		}
 
 		[HttpPost]
@@ -69,16 +71,42 @@ namespace Get_A_Job.Controllers
 
 				if (file2.ContentLength > 0 && file1.ContentLength > 0)
 				{
-					if (ModelState.IsValid)
-					{
+					String FileExt1 = Path.GetExtension(file1.FileName).ToUpper();
+					String FileExt2 = Path.GetExtension(file2.FileName).ToUpper();
 
+					if (FileExt1 == ".PDF" && FileExt2 == ".PDF")
+					{
+						applicationForm.CV = file1;
+						applicationForm.Letter = file2;
+						if (ModelState.IsValid)
+						{
+							var res = ijobApplication.SubmitApplication(applicationForm, file2.FileName, UserId, file1.FileName);
+							if (res == "Success")
+							{
+								ViewBag.ModelMessage = "Submit Succesfull";
+							}
+							else
+							{
+								ViewBag.ModelMessage = "Submit Unuccesfull";
+							}
+						}
+						else
+						{
+							ViewBag.ModelMessage = "Empty fields";
+							ModelState.AddModelError("", "Empty Feilds");
+							return View(applicationForm);
+						}
 					}
 					else
 					{
-						ViewBag.ModelMessage = "Empty fields";
-					ModelState.AddModelError("","Empty Feilds");
-						return View(applicationForm);
+
+						ViewBag.FileStatus = "Invalid file format.";
+						return View();
+
 					}
+
+
+
 				}
 				else
 				{
@@ -93,5 +121,15 @@ namespace Get_A_Job.Controllers
 			}
 			return View();
 		}
+
+
+		//	[HttpGet]
+		//public FileResult DownLoadFile(int id)
+		//{
+		////	var file = iapplicant.
+
+		//	return File(file.FileContent, "application/pdf", file.FileName);
+
+		//}
 	}
 }

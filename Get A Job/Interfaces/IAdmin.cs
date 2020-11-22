@@ -9,6 +9,6 @@ namespace Get_A_Job.Interfaces
 	public interface IAdmin
 	{
 		string Addadmin(AdminViewModel AdminDetails);
-
+		string GetAdminEmail(int JobId);
 	}
 }

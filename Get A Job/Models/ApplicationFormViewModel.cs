@@ -24,14 +24,16 @@ namespace Get_A_Job.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        public int JobID { get; set; }
         
         [Required]
-        [EmailAddress]
+        [Phone]
         [Display(Name = "Phone Number")]
         public string Phonenumber { get; set; }
 
       
         [Display(Name = "Address")]
+        
         public string Address { get; set; }
 
       
@@ -39,10 +41,10 @@ namespace Get_A_Job.Models
         public string State { get; set; }
 
       
-        [Display(Name = "Curriculum vitae (CV)")]
+        [Display(Name = "Curriculum vitae (CV) .pdf")]
         public HttpPostedFileBase CV { get; set; }
 
-        [Display(Name = "Cover Letter")]
+        [Display(Name = "Cover Letter .pdf")]
         public HttpPostedFileBase Letter { get; set; }
 	}
 }

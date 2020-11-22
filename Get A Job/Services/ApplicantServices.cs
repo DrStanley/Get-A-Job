@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Web;
 using Get_A_Job.Entities;
@@ -18,6 +19,8 @@ namespace Get_A_Job.Services
 		{
 			dbContext = db;
 		}
+
+		//this method creates applicants in the platform
 		public string CreateApplicants(RegisterViewModel registerApplicant, ApplicationUser user)
 		{
 			string result = "";
@@ -32,8 +35,9 @@ namespace Get_A_Job.Services
 					OtherNames = registerApplicant.OtherNames,
 					LastName = registerApplicant.LastName,
 					Address = registerApplicant.Address,
-					Phonenumber=registerApplicant.Phonenumber,
+					Phonenumber = registerApplicant.Phonenumber,
 					State = registerApplicant.State,
+					Email = registerApplicant.Email,
 					DateCreated = DateTime.Now,
 					UserId = user.Id
 
@@ -78,6 +82,44 @@ namespace Get_A_Job.Services
 			return result;
 
 		}
+
+		public static byte[] ConvertToByte(HttpPostedFileBase f)
+		{
+			Stream str = f.InputStream;
+			BinaryReader Br = new BinaryReader(str);
+			Byte[] FileDet = Br.ReadBytes((Int32)str.Length);
+			return FileDet;
+		}
+
+		//this method helps in getting byte file from Database
+		public Applications GetFile(int AppID)
+		{
+			var file = dbContext.applications.Where(a => a.Id == AppID).FirstOrDefault();
+
+			return file;
+		}
+
+		//gets Applicants details to put in application form for easier applicaton
+		public ApplicationFormViewModel GetApplicantsDetails(string userId)
+		{
+
+			var a = dbContext.applicants.Where(o => o.UserId == userId).FirstOrDefault();
+			ApplicationFormViewModel m = new ApplicationFormViewModel()
+			{
+				FirstName = a.FirstName,
+				OtherNames = a.OtherNames,
+				LastName = a.LastName,
+				Address = a.Address,
+				Phonenumber = a.Phonenumber,
+				State = a.State,
+				Email = a.Email,
+
+			};
+
+			return m;
+		}
+
+
 
 	}
 }

@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 
 namespace Get_A_Job.Controllers
 {
+	/*
+	 This controller handles all admin actions
+	 */
     public class AdminController : Controller
     {
 		private string userId;
@@ -47,7 +50,7 @@ namespace Get_A_Job.Controllers
         }
 
 
-        // GET: Admin
+        // This enables the admin to post a job
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]

@@ -9,5 +9,7 @@ namespace Get_A_Job.Interfaces
 	public interface IApplicant
 	{
 		string CreateApplicants(RegisterViewModel registerApplicant, ApplicationUser userid);
+		ApplicationFormViewModel GetApplicantsDetails(string userId);
+		
 	}
 }

@@ -1,5 +1,4 @@
 ﻿@model Get_A_Job.Models.ApplicationFormViewModel
-
 @using (Html.BeginForm("ApplicationForm",
                         "JobApplication",
                         FormMethod.Post,
@@ -109,9 +108,9 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CV, htmlAttributes: new { @class = "control-label col-md-5" })
+                    @Html.LabelFor(model => model.Letter, htmlAttributes: new { @class = "control-label col-md-5" })
                     <div class="col-md-10">
-                        <input required type="file" for="letter" for-asp="letter" name="file1" id="file2" />
+                        <input required type="file" for="letter" for-asp="letter" name="file2" id="file2" />
                     </div>
 
                 </div>
@@ -128,6 +127,7 @@
 
         <div class="d-flex justify-content-center row-cols-md-6" style="padding:10px;">
             <div class="form-group">
+                            <input id="jobId" type="hidden" value="@Model.JobID" name="jobId" />
                 <input type="submit" value="Submit" class="nav-link btn btn-success mr-sm-2 btn-outline-primary text-white row-md-10" />
 
             </div>
