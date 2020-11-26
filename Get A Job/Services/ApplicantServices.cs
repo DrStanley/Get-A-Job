@@ -102,7 +102,6 @@ namespace Get_A_Job.Services
 		//gets Applicants details to put in application form for easier applicaton
 		public ApplicationFormViewModel GetApplicantsDetails(string userId)
 		{
-
 			var a = dbContext.applicants.Where(o => o.UserId == userId).FirstOrDefault();
 			ApplicationFormViewModel m = new ApplicationFormViewModel()
 			{

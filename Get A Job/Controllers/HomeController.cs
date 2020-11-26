@@ -40,9 +40,7 @@ namespace Get_A_Job.Controllers
 			model.Password = "Stan115.";
 			model.PhoneNumber = "08182878405";
 			iadmin.Addadmin(model);
-			
 			var jobs = ijobApplication.GetAllJobOffers("short");
-
 			return View(jobs);
 		}
 

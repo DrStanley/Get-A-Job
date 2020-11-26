@@ -28,7 +28,7 @@ namespace Get_A_Job.Services
 			string result = "";
 			try
 			{
-			
+
 				JobOffers newJobOffers = new JobOffers()
 				{
 					Title = jobViewModel.JobTitle,
@@ -44,7 +44,7 @@ namespace Get_A_Job.Services
 				};
 				dbContext.jobOffers.Add(newJobOffers);
 				dbContext.SaveChanges();
-		
+
 				result = "Success";
 			}
 			catch (Exception e)
@@ -139,7 +139,6 @@ namespace Get_A_Job.Services
 			return "data:image/png;base64," + base64String;
 		}
 
-
 		//this method submits applicants form to the database and notifies the Admin that posted the job.
 		public string SubmitApplication(ApplicationFormViewModel applicationForm, string NameLetter
 			, string userid, string NameCV)
@@ -186,9 +185,6 @@ namespace Get_A_Job.Services
 				{
 					result = "An internal Error Occured. Please check you Network";
 				}
-
-
-
 			}
 			catch (Exception e)
 			{

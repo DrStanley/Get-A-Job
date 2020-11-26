@@ -41,7 +41,6 @@ namespace Get_A_Job.Services
 					IdentityRole role = new IdentityRole();
 					role.Name = "Admin";
 					rolemanager.Create(role);
-
 					manager.AddToRole(user.Id, "Admin");
 				}
 				manager.AddToRole(user.Id, "Admin");

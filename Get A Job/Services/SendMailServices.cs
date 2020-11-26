@@ -12,6 +12,7 @@ namespace Get_A_Job.Services
 {
 	public class SendMailServices : ISendMail
 	{
+
 		//Using SendGrid to notify user or admin of actions taken in the appplication
 		public async Task SendMail(string fromMail, string toMail, string subjectMail, string htmlContentMAil)
 		{
