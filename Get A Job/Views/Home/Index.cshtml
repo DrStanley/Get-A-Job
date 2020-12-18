@@ -36,7 +36,7 @@
 </div>
 <div class="container-fluid">
     <div class="d-flex justify-content-center row-cols-md-10 " style="padding-top:10px;">
-        <h1>Ongoing Recruitment</h1>
+        <h1>Ongoing Application</h1>
     </div>
     <div class="row" style="padding:50px">
         @{
@@ -54,15 +54,15 @@
                             @using (Html.BeginForm("JobsDetail", "JobApplication"))
                             {
 
-                            <input id="jobId" type="hidden" value="@job.Id" name="jobId" />
+                                <input id="jobId" type="hidden" value="@job.Id" name="jobId" />
 
-                            <h2>@job.Title</h2>
-                            <p>
-                                @job.AplicationDetails
-                            </p>
-                            <p>
-                                <input type="submit" value="Apply" class="nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-5" />
-                            </p>
+                                <h2>@job.Title</h2>
+                                <p>
+                                    @job.AplicationDetails
+                                </p>
+                                <p>
+                                    <input type="submit" value="Apply" class="nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-5" />
+                                </p>
                             }
                         </div>
                     }
@@ -74,11 +74,31 @@
 
                 }
             }
+            else
+            {
+                <div class="d-flex justify-content-center row-cols-md-4 " style="padding:10px;">
+
+                    <p class="text-info">
+                        No Ongoing Application
+                    </p>
+                </div>
+            }
 
         }
 
     </div>
     <div class="d-flex justify-content-center row-cols-md-4 " style="padding:10px;">
         @Html.ActionLink("View All Offers", "AllJobs", "JobApplication", routeValues: null, htmlAttributes: new { id = "registerLink", Class = "nav-link btn btn-primary mr-sm-2 btn-outline-primary text-white row-md-10" })
+    </div>
+
+    <div class="d-flex justify-content-center row-cols-md-10 " style="padding-top:10px;">
+        <h1>Services</h1>
+    </div>
+    <div class="row" style="padding:50px">
+        <p>
+            At JB limited we provide jobs for thousands of unemployed Nigerians, Thereby eradicating unemployment.
+            We gerantee genuie jobs that pays well and cares about there workers. <span class="text-info"><b>Thank you for coming.</b></span>
+        </p>
+
     </div>
 </div>
